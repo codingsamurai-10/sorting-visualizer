@@ -7,7 +7,6 @@
           append-icon="mdi-chart-bar"
           :items="sortingAlgorithmOptions"
           v-model="sortingAlgorithmChoice"
-          @change="callSortingAlgorithmFunction"
           color="secondary darken-4"
         ></v-select>
       </v-col>
@@ -31,10 +30,11 @@
       <v-card
         flat
         class="red d-inline-block mr-2"
+        :class="{ active: item.active }"
         width="20px"
         v-for="item in arrayToSort"
         :key="item.id"
-        :height="item * 10"
+        :height="item.value * 10"
         ref="arrayToSort"
       ></v-card>
     </v-card>
@@ -60,22 +60,26 @@ export default {
       console.log("Received quick");
     },
 
-    bubbleSort: function() {
+    async bubbleSort() {
       let n = this.arrayToSort.length;
-      for (let i = 0; i < n; ++i) {
-        for (let j = i + 1; j < n - i; ++j) {
-          if (this.arrayToSort[j] < this.arrayToSort[j - 1]) {
-            // this.$refs.arrayToSort[j].$el.classList.add("active");
-            // this.$refs.arrayToSort[j + 1].$el.classList.add("active");
-            let temp = this.arrayToSort[j - 1];
-            this.arrayToSort[j - 1] = this.arrayToSort[j];
-            this.arrayToSort[j] = temp;
+      for (let i = 1; i < n; ++i) {
+        for (let j = 0; j < n - i; ++j) {
+          this.$set(this.arrayToSort[j], "active", true);
+          this.$set(this.arrayToSort[j + 1], "active", true);
+          await new Promise(r => setTimeout(r, 150));
+          if (this.arrayToSort[j].value > this.arrayToSort[j + 1].value) {
+            let temp = this.arrayToSort[j];
+            this.$set(this.arrayToSort, j, this.arrayToSort[j + 1]);
+            this.$set(this.arrayToSort, j + 1, temp);
           }
+          this.$set(this.arrayToSort[j], "active", false);
+          this.$set(this.arrayToSort[j + 1], "active", false);
         }
       }
     },
 
-    callSortingAlgorithmFunction: function(event) {
+    callSortingAlgorithmFunction: function() {
+      let event = this.sortingAlgorithmChoice;
       if (event == "Merge Sort") {
         this.mergeSort();
       } else if (event == "Quick Sort") {
@@ -86,9 +90,12 @@ export default {
     },
 
     intializeRandomArray: function() {
-      this.arrayToSort = [];
+      this.arrayToSort = new Array(52);
       for (let i = 0; i < 52; ++i) {
-        this.arrayToSort.push(Math.floor(Math.random() * 55) + 10);
+        this.arrayToSort[i] = {
+          value: Math.floor(Math.random() * 55) + 10,
+          active: false
+        };
       }
     }
   },
