@@ -50,8 +50,9 @@ export default {
     sortingAlgorithmOptions: [
       "Merge Sort",
       "Quick Sort",
-      "Bubble Sort",
-      "Selection Sort"
+      "Insertion Sort",
+      "Selection Sort",
+      "Bubble Sort"
     ],
     sortingAlgorithmChoice: "Sorting",
     arrayToSort: [],
@@ -59,12 +60,16 @@ export default {
   }),
 
   methods: {
-    mergeSort: function() {
+    async mergeSort() {
       console.log("Received merge");
     },
 
-    quickSort: function() {
+    async quickSort() {
       console.log("Received quick");
+    },
+
+    async insertionSort() {
+      console.log("Received insertion");
     },
 
     async selectionSort() {
