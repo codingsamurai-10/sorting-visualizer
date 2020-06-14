@@ -19,7 +19,7 @@
       </v-col>
 
       <v-col cols="1">
-        <v-btn class="secondary darken-3 mt-3 pa-0" text @click="intializeRandomArray">
+        <v-btn class="secondary darken-3 pa-0" text @click="intializeRandomArray" fab>
           <v-icon>mdi-reload</v-icon>
         </v-btn>
       </v-col>
@@ -48,7 +48,8 @@ export default {
   data: () => ({
     sortingAlgorithmOptions: ["Merge Sort", "Quick Sort", "Bubble Sort"],
     sortingAlgorithmChoice: "Sorting",
-    arrayToSort: []
+    arrayToSort: [],
+    stopSorting: false
   }),
 
   methods: {
