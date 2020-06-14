@@ -90,11 +90,13 @@ export default {
     async bubbleSort() {
       let n = this.arrayToSort.length;
       for (let i = 1; i < n; ++i) {
+        var flag = true;
         for (let j = 0; j < n - i; ++j) {
           this.$set(this.arrayToSort[j], "active", true);
           this.$set(this.arrayToSort[j + 1], "active", true);
           await new Promise(r => setTimeout(r, 100));
           if (this.arrayToSort[j].value > this.arrayToSort[j + 1].value) {
+            flag = false;
             let temp = this.arrayToSort[j];
             this.$set(this.arrayToSort, j, this.arrayToSort[j + 1]);
             this.$set(this.arrayToSort, j + 1, temp);
@@ -102,6 +104,7 @@ export default {
           this.$set(this.arrayToSort[j], "active", false);
           this.$set(this.arrayToSort[j + 1], "active", false);
         }
+        if(flag) break;
       }
     },
 
