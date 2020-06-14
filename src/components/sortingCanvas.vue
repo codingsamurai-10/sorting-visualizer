@@ -56,23 +56,31 @@ export default {
     ],
     sortingAlgorithmChoice: "Sorting",
     arrayToSort: [],
-    stopSorting: false
+    stopSorting: false,
+    algorithmRunning: false
   }),
 
   methods: {
     async mergeSort() {
+      this.algorithmRunning = true;
       console.log("Received merge");
+      this.algorithmRunning = false;
     },
 
     async quickSort() {
+      this.algorithmRunning = true;
       console.log("Received quick");
+      this.algorithmRunning = false;
     },
 
     async insertionSort() {
+      this.algorithmRunning = true;
       console.log("Received insertion");
+      this.algorithmRunning = false;
     },
 
     async selectionSort() {
+      this.algorithmRunning = true;
       let n = this.arrayToSort.length;
       for (let i = 0; i < n - 1; ++i) {
         let min = i;
@@ -90,9 +98,11 @@ export default {
         this.$set(this.arrayToSort, min, this.arrayToSort[i]);
         this.$set(this.arrayToSort, i, temp);
       }
+      this.algorithmRunning = false;
     },
 
     async bubbleSort() {
+      this.algorithmRunning = true;
       let n = this.arrayToSort.length;
       for (let i = 1; i < n; ++i) {
         var flag = true;
@@ -111,17 +121,24 @@ export default {
         }
         if(flag) break;
       }
+      this.algorithmRunning = false;
     },
 
     callSortingAlgorithmFunction: function() {
+      if(this.algorithmRunning) {
+        // notify using snackbar that an algorithm is already running
+        // provide button to terminate the running algorithm
+      }
       let event = this.sortingAlgorithmChoice;
       if (event == "Merge Sort") {
         this.mergeSort();
       } else if (event == "Quick Sort") {
         this.quickSort();
-      } else if (event == "Bubble Sort") {
+      } else if (event == "Insertion Sort") {
         this.bubbleSort();
       } else if (event == "Selection Sort") {
+        this.selectionSort();
+      } else if (event == "Bubble Sort") {
         this.selectionSort();
       }
     },
