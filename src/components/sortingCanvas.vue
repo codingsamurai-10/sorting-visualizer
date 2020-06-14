@@ -12,14 +12,14 @@
       </v-col>
 
       <v-col cols="2">
-        <v-btn class="secondary darken-3 mt-3" @click="callSortingAlgorithmFunction">
+        <v-btn class="secondary darken-3 mt-3 ml-5" @click="callSortingAlgorithmFunction">
           <span>Start sorting</span>
           <v-icon right>mdi-shuffle</v-icon>
         </v-btn>
       </v-col>
 
       <v-col cols="1">
-        <v-btn class="secondary darken-3 pa-0" text @click="intializeRandomArray" fab>
+        <v-btn class="secondary darken-3 pa-0 mt-2" text @click="intializeRandomArray" fab small>
           <v-icon>mdi-reload</v-icon>
         </v-btn>
       </v-col>
@@ -135,15 +135,19 @@ export default {
       } else if (event == "Quick Sort") {
         this.quickSort();
       } else if (event == "Insertion Sort") {
-        this.bubbleSort();
+        this.insertionSort();
       } else if (event == "Selection Sort") {
         this.selectionSort();
       } else if (event == "Bubble Sort") {
-        this.selectionSort();
+        this.bubbleSort();
       }
     },
 
     intializeRandomArray: function() {
+      if(this.algorithmRunning) {
+        // notify using snackbar that an algorithm is already running
+        // provide button to terminate the running algorithm
+      }
       this.arrayToSort = new Array(52);
       for (let i = 0; i < 52; ++i) {
         this.arrayToSort[i] = {
