@@ -1,5 +1,15 @@
 <template>
   <v-container fluid>
+    <v-snackbar v-model="snackbar">
+      A sorting algorithm is already running. Do you want to terminate it?
+      <template
+        v-slot:action="{ attrs }"
+      >
+        <v-btn color="pink" @click="algorithmRunning = false">Yes</v-btn>
+        <v-btn color="pink" text v-bind="attrs" @click="snackbar = false">No</v-btn>
+      </template>
+    </v-snackbar>
+
     <v-row>
       <v-col cols="9">
         <v-select
@@ -57,7 +67,8 @@ export default {
     sortingAlgorithmChoice: "Sorting",
     arrayToSort: [],
     stopSorting: false,
-    algorithmRunning: false
+    algorithmRunning: false,
+    snackbar: false
   }),
 
   methods: {
@@ -102,6 +113,14 @@ export default {
     },
 
     async bubbleSort() {
+      // TODO: handle multiple algorithms running at same time
+      // Possible code <notworking> to achieve the above
+      // if(this.algorithmRunning) {
+      //   this.snackbar = true;
+      //   await new Promise(snackbarDelay => setTimeout(snackbarDelay, 5000)).then(() => {
+      //     if(this.algorithmRunning) console.log("yeah, still sucks");
+      //   });
+      // }
       this.algorithmRunning = true;
       let n = this.arrayToSort.length;
       for (let i = 1; i < n; ++i) {
@@ -119,16 +138,12 @@ export default {
           this.$set(this.arrayToSort[j], "active", false);
           this.$set(this.arrayToSort[j + 1], "active", false);
         }
-        if(flag) break;
+        if (flag) break;
       }
       this.algorithmRunning = false;
     },
 
     callSortingAlgorithmFunction: function() {
-      if(this.algorithmRunning) {
-        // notify using snackbar that an algorithm is already running
-        // provide button to terminate the running algorithm
-      }
       let event = this.sortingAlgorithmChoice;
       if (event == "Merge Sort") {
         this.mergeSort();
@@ -144,10 +159,6 @@ export default {
     },
 
     intializeRandomArray: function() {
-      if(this.algorithmRunning) {
-        // notify using snackbar that an algorithm is already running
-        // provide button to terminate the running algorithm
-      }
       this.arrayToSort = new Array(52);
       for (let i = 0; i < 52; ++i) {
         this.arrayToSort[i] = {
