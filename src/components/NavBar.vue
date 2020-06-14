@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- mdi-chart-bar -->
     <v-app-bar color="primary" dark :elevation="12">
       <v-toolbar-title>{{ pageTitle }}</v-toolbar-title>
     </v-app-bar>
