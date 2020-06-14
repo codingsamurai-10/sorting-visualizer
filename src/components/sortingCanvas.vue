@@ -29,7 +29,8 @@
       <v-card-title>{{ sortingAlgorithmChoice }} Visualization</v-card-title>
       <v-card
         flat
-        class="red d-inline-block mr-2"
+        color="#1976D2"
+        class="d-inline-block mr-2"
         :class="{ active: item.active }"
         width="20px"
         v-for="item in arrayToSort"
@@ -109,6 +110,6 @@ export default {
 
 <style scoped>
 .active {
-  background: green !important;
+  background: #4DB6AC !important;
 }
 </style>
