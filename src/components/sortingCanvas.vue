@@ -66,7 +66,7 @@ export default {
         for (let j = 0; j < n - i; ++j) {
           this.$set(this.arrayToSort[j], "active", true);
           this.$set(this.arrayToSort[j + 1], "active", true);
-          await new Promise(r => setTimeout(r, 150));
+          await new Promise(r => setTimeout(r, 100));
           if (this.arrayToSort[j].value > this.arrayToSort[j + 1].value) {
             let temp = this.arrayToSort[j];
             this.$set(this.arrayToSort, j, this.arrayToSort[j + 1]);
