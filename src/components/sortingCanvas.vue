@@ -47,7 +47,12 @@ export default {
   name: "SortingCanvas",
 
   data: () => ({
-    sortingAlgorithmOptions: ["Merge Sort", "Quick Sort", "Bubble Sort"],
+    sortingAlgorithmOptions: [
+      "Merge Sort",
+      "Quick Sort",
+      "Bubble Sort",
+      "Selection Sort"
+    ],
     sortingAlgorithmChoice: "Sorting",
     arrayToSort: [],
     stopSorting: false
@@ -60,6 +65,26 @@ export default {
 
     quickSort: function() {
       console.log("Received quick");
+    },
+
+    async selectionSort() {
+      let n = this.arrayToSort.length;
+      for (let i = 0; i < n - 1; ++i) {
+        let min = i;
+        for (let j = i + 1; j < n; ++j) {
+          this.$set(this.arrayToSort[j], "active", true);
+          this.$set(this.arrayToSort[min], "active", true);
+          await new Promise(r => setTimeout(r, 10));
+          if (this.arrayToSort[j].value < this.arrayToSort[min].value) {
+            min = j;
+          }
+          this.$set(this.arrayToSort[j], "active", false);
+          this.$set(this.arrayToSort[min], "active", false);
+        }
+        let temp = this.arrayToSort[min];
+        this.$set(this.arrayToSort, min, this.arrayToSort[i]);
+        this.$set(this.arrayToSort, i, temp);
+      }
     },
 
     async bubbleSort() {
@@ -88,6 +113,8 @@ export default {
         this.quickSort();
       } else if (event == "Bubble Sort") {
         this.bubbleSort();
+      } else if (event == "Selection Sort") {
+        this.selectionSort();
       }
     },
 
@@ -110,6 +137,6 @@ export default {
 
 <style scoped>
 .active {
-  background: #4DB6AC !important;
+  background: #4db6ac !important;
 }
 </style>
