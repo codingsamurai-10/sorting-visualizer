@@ -114,7 +114,8 @@ export default {
 
     async bubbleSort() {
       // TODO: handle multiple algorithms running at same time
-      // Possible code <notworking> to achieve the above
+      // Possible code <not working> to achieve the above
+      // Need to handle it for all sortings. Probably needs a separate function
       // if(this.algorithmRunning) {
       //   this.snackbar = true;
       //   await new Promise(snackbarDelay => setTimeout(snackbarDelay, 5000)).then(() => {
