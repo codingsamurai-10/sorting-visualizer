@@ -36,7 +36,21 @@
     </v-row>
 
     <v-card :elevation="6" class="pa-2">
-      <v-card-title>{{ sortingAlgorithmChoice }} Visualization</v-card-title>
+      <v-card-title>
+        <v-row>
+          <v-col cols="9">
+            <span>{{ sortingAlgorithmChoice }} Visualization</span>
+          </v-col>
+
+          <v-spacer></v-spacer>
+
+          <v-col cols="3">
+              <v-slider v-model="sortingSpeed" class="align-center" min="5" max="500">
+                <template v-slot:append></template>
+              </v-slider>
+          </v-col>
+        </v-row>
+      </v-card-title>
       <v-card
         flat
         color="#1976D2"
@@ -68,7 +82,8 @@ export default {
     arrayToSort: [],
     stopSorting: false,
     algorithmRunning: false,
-    snackbar: false
+    snackbar: false,
+    sortingSpeed: 50
   }),
 
   methods: {
@@ -91,7 +106,7 @@ export default {
         for (let j = i - 1; j >= 0; --j) {
           this.$set(this.arrayToSort[j], "active", true);
           this.$set(this.arrayToSort[j + 1], "active", true);
-          await new Promise(r => setTimeout(r, 10));
+          await new Promise(r => setTimeout(r, this.sortingSpeed));
           if (this.arrayToSort[j].value > this.arrayToSort[j + 1].value) {
             let temp = this.arrayToSort[j];
             this.$set(this.arrayToSort, j, this.arrayToSort[j + 1]);
@@ -116,7 +131,7 @@ export default {
         for (let j = i + 1; j < n; ++j) {
           this.$set(this.arrayToSort[j], "active", true);
           this.$set(this.arrayToSort[min], "active", true);
-          await new Promise(r => setTimeout(r, 10));
+          await new Promise(r => setTimeout(r, this.sortingSpeed));
           if (this.arrayToSort[j].value < this.arrayToSort[min].value) {
             min = j;
           }
@@ -146,7 +161,7 @@ export default {
         for (let j = 0; j < n - i; ++j) {
           this.$set(this.arrayToSort[j], "active", true);
           this.$set(this.arrayToSort[j + 1], "active", true);
-          await new Promise(r => setTimeout(r, 100));
+          await new Promise(r => setTimeout(r, this.sortingSpeed));
           if (this.arrayToSort[j].value > this.arrayToSort[j + 1].value) {
             flag = false;
             let temp = this.arrayToSort[j];
