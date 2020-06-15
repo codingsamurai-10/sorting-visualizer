@@ -10,8 +10,8 @@
 </template>
 
 <script>
-import NavBar from "./components/NavBar";
-import SortingCanvas from "./components/sortingCanvas";
+import NavBar from "@/components/NavBar";
+import SortingCanvas from "@/components/sortingCanvas";
 
 export default {
   name: "App",
