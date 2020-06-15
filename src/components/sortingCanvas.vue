@@ -86,7 +86,25 @@ export default {
 
     async insertionSort() {
       this.algorithmRunning = true;
-      console.log("Received insertion");
+      let n = this.arrayToSort.length;
+      for (let i = 1; i < n; ++i) {
+        for (let j = i - 1; j >= 0; --j) {
+          this.$set(this.arrayToSort[j], "active", true);
+          this.$set(this.arrayToSort[j + 1], "active", true);
+          await new Promise(r => setTimeout(r, 10));
+          if (this.arrayToSort[j].value > this.arrayToSort[j + 1].value) {
+            let temp = this.arrayToSort[j];
+            this.$set(this.arrayToSort, j, this.arrayToSort[j + 1]);
+            this.$set(this.arrayToSort, j + 1, temp);
+          } else {
+            this.$set(this.arrayToSort[j], "active", false);
+            this.$set(this.arrayToSort[j + 1], "active", false);
+            break;
+          }
+          this.$set(this.arrayToSort[j], "active", false);
+          this.$set(this.arrayToSort[j + 1], "active", false);
+        }
+      }
       this.algorithmRunning = false;
     },
 
