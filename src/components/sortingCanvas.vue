@@ -45,21 +45,25 @@
           <v-spacer></v-spacer>
 
           <v-col cols="3">
-              <v-slider v-model="sortingSpeed" class="align-center" :min="minSortingSpeed" :max="maxSortingSpeed">
-                <template v-slot:append></template>
-              </v-slider>
+            <v-slider
+              v-model="sortingSpeed"
+              class="align-center"
+              :min="minSortingSpeed"
+              :max="maxSortingSpeed"
+            >
+              <template v-slot:append></template>
+            </v-slider>
           </v-col>
         </v-row>
       </v-card-title>
       <v-card
         flat
-        color="#1976D2"
         class="d-inline-block mr-2"
-        :class="{ active: item.active }"
         width="20px"
         v-for="item in arrayToSort"
         :key="item.id"
         :height="item.value * 10"
+        :color="item.color"
         ref="arrayToSort"
       ></v-card>
     </v-card>
@@ -85,7 +89,10 @@ export default {
     snackbar: false,
     minSortingSpeed: 5,
     maxSortingSpeed: 500,
-    sortingSpeed: 450
+    sortingSpeed: 450,
+    colorOfDefaultBar: "#1976D2",
+    colorOfCurrentActiveBar: "#4db6ac",
+    colorOfCurrentInactiveBar: "red"
   }),
 
   methods: {
@@ -106,20 +113,29 @@ export default {
       let n = this.arrayToSort.length;
       for (let i = 1; i < n; ++i) {
         for (let j = i - 1; j >= 0; --j) {
-          this.$set(this.arrayToSort[j], "active", true);
-          this.$set(this.arrayToSort[j + 1], "active", true);
-          await new Promise(r => setTimeout(r, this.minSortingSpeed + this.maxSortingSpeed - this.sortingSpeed));
+          this.$set(this.arrayToSort[j], "color", this.colorOfCurrentActiveBar);
+          this.$set(
+            this.arrayToSort[j + 1],
+            "color",
+            this.colorOfCurrentInactiveBar
+          );
+          await new Promise(r =>
+            setTimeout(
+              r,
+              this.minSortingSpeed + this.maxSortingSpeed - this.sortingSpeed
+            )
+          );
           if (this.arrayToSort[j].value > this.arrayToSort[j + 1].value) {
             let temp = this.arrayToSort[j];
             this.$set(this.arrayToSort, j, this.arrayToSort[j + 1]);
             this.$set(this.arrayToSort, j + 1, temp);
           } else {
-            this.$set(this.arrayToSort[j], "active", false);
-            this.$set(this.arrayToSort[j + 1], "active", false);
+            this.$set(this.arrayToSort[j], "color", this.colorOfDefaultBar);
+            this.$set(this.arrayToSort[j + 1], "color", this.colorOfDefaultBar);
             break;
           }
-          this.$set(this.arrayToSort[j], "active", false);
-          this.$set(this.arrayToSort[j + 1], "active", false);
+          this.$set(this.arrayToSort[j], "color", this.colorOfDefaultBar);
+          this.$set(this.arrayToSort[j + 1], "color", this.colorOfDefaultBar);
         }
       }
       this.algorithmRunning = false;
@@ -131,14 +147,27 @@ export default {
       for (let i = 0; i < n - 1; ++i) {
         let min = i;
         for (let j = i + 1; j < n; ++j) {
-          this.$set(this.arrayToSort[j], "active", true);
-          this.$set(this.arrayToSort[min], "active", true);
-          await new Promise(r => setTimeout(r, this.minSortingSpeed + this.maxSortingSpeed - this.sortingSpeed));
+          this.$set(
+            this.arrayToSort[j],
+            "color",
+            this.colorOfCurrentInactiveBar
+          );
+          this.$set(
+            this.arrayToSort[min],
+            "color",
+            this.colorOfCurrentActiveBar
+          );
+          await new Promise(r =>
+            setTimeout(
+              r,
+              this.minSortingSpeed + this.maxSortingSpeed - this.sortingSpeed
+            )
+          );
           if (this.arrayToSort[j].value < this.arrayToSort[min].value) {
             min = j;
           }
-          this.$set(this.arrayToSort[j], "active", false);
-          this.$set(this.arrayToSort[min], "active", false);
+          this.$set(this.arrayToSort[j], "color", this.colorOfDefaultBar);
+          this.$set(this.arrayToSort[min], "color", this.colorOfDefaultBar);
         }
         let temp = this.arrayToSort[min];
         this.$set(this.arrayToSort, min, this.arrayToSort[i]);
@@ -161,17 +190,30 @@ export default {
       for (let i = 1; i < n; ++i) {
         var flag = true;
         for (let j = 0; j < n - i; ++j) {
-          this.$set(this.arrayToSort[j], "active", true);
-          this.$set(this.arrayToSort[j + 1], "active", true);
-          await new Promise(r => setTimeout(r, this.minSortingSpeed + this.maxSortingSpeed - this.sortingSpeed));
+          this.$set(
+            this.arrayToSort[j],
+            "color",
+            this.colorOfCurrentInactiveBar
+          );
+          this.$set(
+            this.arrayToSort[j + 1],
+            "color",
+            this.colorOfCurrentActiveBar
+          );
+          await new Promise(r =>
+            setTimeout(
+              r,
+              this.minSortingSpeed + this.maxSortingSpeed - this.sortingSpeed
+            )
+          );
           if (this.arrayToSort[j].value > this.arrayToSort[j + 1].value) {
             flag = false;
             let temp = this.arrayToSort[j];
             this.$set(this.arrayToSort, j, this.arrayToSort[j + 1]);
             this.$set(this.arrayToSort, j + 1, temp);
           }
-          this.$set(this.arrayToSort[j], "active", false);
-          this.$set(this.arrayToSort[j + 1], "active", false);
+          this.$set(this.arrayToSort[j], "color", this.colorOfDefaultBar);
+          this.$set(this.arrayToSort[j + 1], "color", this.colorOfDefaultBar);
         }
         if (flag) break;
       }
@@ -198,7 +240,7 @@ export default {
       for (let i = 0; i < 52; ++i) {
         this.arrayToSort[i] = {
           value: Math.floor(Math.random() * 55) + 10,
-          active: false
+          color: this.colorOfDefaultBar
         };
       }
     }
@@ -209,9 +251,3 @@ export default {
   }
 };
 </script>
-
-<style scoped>
-.active {
-  background: #4db6ac !important;
-}
-</style>
