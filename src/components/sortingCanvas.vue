@@ -129,20 +129,17 @@ export default {
       this.algorithmRunning = true;
       let n = this.arrayToSort.length;
       for (let i = 0; i < n - 1; ++i) {
-        var flag = true;
         let min = i;
         for (let j = i + 1; j < n; ++j) {
           this.$set(this.arrayToSort[j], "active", true);
           this.$set(this.arrayToSort[min], "active", true);
           await new Promise(r => setTimeout(r, this.minSortingSpeed + this.maxSortingSpeed - this.sortingSpeed));
           if (this.arrayToSort[j].value < this.arrayToSort[min].value) {
-            flag = false;
             min = j;
           }
           this.$set(this.arrayToSort[j], "active", false);
           this.$set(this.arrayToSort[min], "active", false);
         }
-        if (flag) break;
         let temp = this.arrayToSort[min];
         this.$set(this.arrayToSort, min, this.arrayToSort[i]);
         this.$set(this.arrayToSort, i, temp);
