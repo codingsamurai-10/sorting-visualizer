@@ -1,14 +1,5 @@
 <template>
   <v-container fluid>
-    <v-snackbar v-model="snackbar">
-      A sorting algorithm is already running. Do you want to terminate it?
-      <template
-        v-slot:action="{ attrs }"
-      >
-        <v-btn color="pink" @click="algorithmRunning = false">Yes</v-btn>
-        <v-btn color="pink" text v-bind="attrs" @click="snackbar = false">No</v-btn>
-      </template>
-    </v-snackbar>
 
     <v-row>
       <v-col cols="9">
@@ -22,14 +13,23 @@
       </v-col>
 
       <v-col cols="2">
-        <v-btn class="secondary darken-3 mt-3 ml-5" @click="callSortingAlgorithmFunction">
+        <v-btn
+          class="secondary darken-3 mt-3 ml-5"
+          @click="callSortingAlgorithmFunction"
+        >
           <span>Start sorting</span>
           <v-icon right>mdi-shuffle</v-icon>
         </v-btn>
       </v-col>
 
       <v-col cols="1">
-        <v-btn class="secondary darken-3 pa-0 mt-2" text @click="intializeRandomArray" fab small>
+        <v-btn
+          class="secondary darken-3 pa-0 mt-2"
+          text
+          @click="intializeRandomArray"
+          fab
+          small
+        >
           <v-icon>mdi-reload</v-icon>
         </v-btn>
       </v-col>
@@ -76,11 +76,9 @@ export default {
 
   data: () => ({
     sortingAlgorithmOptions: [
-      "Merge Sort",
-      "Quick Sort",
       "Insertion Sort",
       "Selection Sort",
-      "Bubble Sort"
+      "Bubble Sort",
     ],
     sortingAlgorithmChoice: "Sorting",
     arrayToSort: [],
@@ -92,24 +90,19 @@ export default {
     sortingSpeed: 450,
     colorOfDefaultBar: "#1976D2",
     colorOfCurrentActiveBar: "#4db6ac",
-    colorOfCurrentInactiveBar: "red"
+    colorOfCurrentInactiveBar: "red",
   }),
 
   methods: {
     async mergeSort() {
-      this.algorithmRunning = true;
       console.log("Received merge");
-      this.algorithmRunning = false;
     },
 
     async quickSort() {
-      this.algorithmRunning = true;
       console.log("Received quick");
-      this.algorithmRunning = false;
     },
 
     async insertionSort() {
-      this.algorithmRunning = true;
       let n = this.arrayToSort.length;
       for (let i = 1; i < n; ++i) {
         for (let j = i - 1; j >= 0; --j) {
@@ -119,12 +112,13 @@ export default {
             "color",
             this.colorOfCurrentInactiveBar
           );
-          await new Promise(r =>
-            setTimeout(
+          await new Promise((r) => {
+            let timeout = setTimeout(
               r,
               this.minSortingSpeed + this.maxSortingSpeed - this.sortingSpeed
-            )
-          );
+            );
+            if(!this.algorithmRunning) clearTimeout(timeout);
+          });
           if (this.arrayToSort[j].value > this.arrayToSort[j + 1].value) {
             let temp = this.arrayToSort[j];
             this.$set(this.arrayToSort, j, this.arrayToSort[j + 1]);
@@ -138,11 +132,9 @@ export default {
           this.$set(this.arrayToSort[j + 1], "color", this.colorOfDefaultBar);
         }
       }
-      this.algorithmRunning = false;
     },
 
     async selectionSort() {
-      this.algorithmRunning = true;
       let n = this.arrayToSort.length;
       for (let i = 0; i < n - 1; ++i) {
         let min = i;
@@ -157,12 +149,13 @@ export default {
             "color",
             this.colorOfCurrentActiveBar
           );
-          await new Promise(r =>
-            setTimeout(
+          await new Promise((r) => {
+            let timeout = setTimeout(
               r,
               this.minSortingSpeed + this.maxSortingSpeed - this.sortingSpeed
-            )
-          );
+            );
+            if(!this.algorithmRunning) clearTimeout(timeout);
+          });
           if (this.arrayToSort[j].value < this.arrayToSort[min].value) {
             min = j;
           }
@@ -173,7 +166,6 @@ export default {
         this.$set(this.arrayToSort, min, this.arrayToSort[i]);
         this.$set(this.arrayToSort, i, temp);
       }
-      this.algorithmRunning = false;
     },
 
     async bubbleSort() {
@@ -185,7 +177,6 @@ export default {
       //     if(this.algorithmRunning) console.log("yeah, still sucks");
       //   });
       // }
-      this.algorithmRunning = true;
       let n = this.arrayToSort.length;
       for (let i = 1; i < n; ++i) {
         var flag = true;
@@ -200,12 +191,13 @@ export default {
             "color",
             this.colorOfCurrentActiveBar
           );
-          await new Promise(r =>
-            setTimeout(
+          await new Promise((r) => {
+            let timeout = setTimeout(
               r,
               this.minSortingSpeed + this.maxSortingSpeed - this.sortingSpeed
-            )
-          );
+            );
+            if(!this.algorithmRunning) clearTimeout(timeout);
+          });
           if (this.arrayToSort[j].value > this.arrayToSort[j + 1].value) {
             flag = false;
             let temp = this.arrayToSort[j];
@@ -217,37 +209,45 @@ export default {
         }
         if (flag) break;
       }
-      this.algorithmRunning = false;
     },
 
-    callSortingAlgorithmFunction: function() {
+    async callSortingAlgorithmFunction() {
       let event = this.sortingAlgorithmChoice;
+      if(this.algorithmRunning) {
+        this.algorithmRunning = false;
+        this.snackbar = true;
+      }
+      else {
+        this.algorithmRunning = true;
+      }
       if (event == "Merge Sort") {
         this.mergeSort();
       } else if (event == "Quick Sort") {
         this.quickSort();
       } else if (event == "Insertion Sort") {
-        this.insertionSort();
+        await this.insertionSort();
       } else if (event == "Selection Sort") {
-        this.selectionSort();
+        await this.selectionSort();
       } else if (event == "Bubble Sort") {
-        this.bubbleSort();
+        await this.bubbleSort();
       }
+      this.algorithmRunning = false;
     },
 
-    intializeRandomArray: function() {
+    intializeRandomArray: function () {
+      this.algorithmRunning = false;
       this.arrayToSort = new Array(52);
       for (let i = 0; i < 52; ++i) {
         this.arrayToSort[i] = {
           value: Math.floor(Math.random() * 55) + 10,
-          color: this.colorOfDefaultBar
+          color: this.colorOfDefaultBar,
         };
       }
-    }
+    },
   },
 
   created() {
     this.intializeRandomArray();
-  }
+  },
 };
 </script>
