@@ -16,6 +16,7 @@
         <v-btn
           class="secondary darken-3 mt-3 ml-5"
           @click="callSortingAlgorithmFunction"
+          :disabled="this.algorithmRunning"
         >
           <span>Start sorting</span>
           <v-icon right>mdi-shuffle</v-icon>
