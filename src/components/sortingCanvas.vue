@@ -170,14 +170,6 @@ export default {
     },
 
     async bubbleSort() {
-      // TODO: handle multiple algorithms running at same time
-      // Possible code <notworking> to achieve the above
-      // if(this.algorithmRunning) {
-      //   this.snackbar = true;
-      //   await new Promise(snackbarDelay => setTimeout(snackbarDelay, 5000)).then(() => {
-      //     if(this.algorithmRunning) console.log("yeah, still sucks");
-      //   });
-      // }
       let n = this.arrayToSort.length;
       for (let i = 1; i < n; ++i) {
         var flag = true;
@@ -214,13 +206,7 @@ export default {
 
     async callSortingAlgorithmFunction() {
       let event = this.sortingAlgorithmChoice;
-      if(this.algorithmRunning) {
-        this.algorithmRunning = false;
-        this.snackbar = true;
-      }
-      else {
-        this.algorithmRunning = true;
-      }
+      this.algorithmRunning = true;
       if (event == "Merge Sort") {
         this.mergeSort();
       } else if (event == "Quick Sort") {
