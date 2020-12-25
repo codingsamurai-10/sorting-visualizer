@@ -6,9 +6,9 @@
         <v-select
           label="Choose Algorithm"
           append-icon="mdi-chart-bar"
+          color="secondary darken-4"
           :items="sortingAlgorithmOptions"
           v-model="sortingAlgorithmChoice"
-          color="secondary darken-4"
         ></v-select>
       </v-col>
 
@@ -27,18 +27,18 @@
       <!-- Re-initialize random array -->
       <v-col cols="1">
         <v-btn
-          class="secondary darken-3 pa-0 mt-2"
           text
-          @click="initializeRandomArray"
           fab
           small
+          class="secondary darken-3 pa-0 mt-2"
+          @click="initializeRandomArray"
         >
           <v-icon>mdi-reload</v-icon>
         </v-btn>
       </v-col>
     </v-row>
 
-    <v-card :elevation="6" class="pa-2">
+    <v-card class="pa-2" :elevation="6">
       <v-card-title>
         <v-row>
           <!-- Heading of selected algorithm -->
@@ -51,8 +51,8 @@
           <!-- Speed control -->
           <v-col cols="3">
             <v-slider
-              v-model="sortingSpeed"
               class="align-center"
+              v-model="sortingSpeed"
               :min="minSortingSpeed"
               :max="maxSortingSpeed"
             >
