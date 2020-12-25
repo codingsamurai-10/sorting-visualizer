@@ -9,10 +9,6 @@
 <script>
 export default {
   name: "NavBar",
-
   props: ["pageTitle"],
-
-  data: () => ({
-  })
 };
 </script>
