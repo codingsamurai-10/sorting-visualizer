@@ -84,7 +84,6 @@ export default {
     arrayToSort: [],
     stopSorting: false,
     algorithmRunning: false,
-    snackbar: false,
     minSortingSpeed: 5,
     maxSortingSpeed: 500,
     sortingSpeed: 450,
@@ -94,14 +93,6 @@ export default {
   }),
 
   methods: {
-    async mergeSort() {
-      console.log("Received merge");
-    },
-
-    async quickSort() {
-      console.log("Received quick");
-    },
-
     async insertionSort() {
       let n = this.arrayToSort.length;
       for (let i = 1; i < n; ++i) {
