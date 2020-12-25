@@ -26,7 +26,7 @@
         <v-btn
           class="secondary darken-3 pa-0 mt-2"
           text
-          @click="intializeRandomArray"
+          @click="initializeRandomArray"
           fab
           small
         >
@@ -211,7 +211,7 @@ export default {
       this.algorithmRunning = false;
     },
 
-    intializeRandomArray: function () {
+    initializeRandomArray: function () {
       this.algorithmRunning = false;
       this.arrayToSort = new Array(52);
       for (let i = 0; i < 52; ++i) {
@@ -224,7 +224,7 @@ export default {
   },
 
   created() {
-    this.intializeRandomArray();
+    this.initializeRandomArray();
   },
 };
 </script>
