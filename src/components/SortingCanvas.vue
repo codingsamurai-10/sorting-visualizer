@@ -1,6 +1,7 @@
 <template>
   <v-container fluid>
     <v-row>
+      <!-- Selection of algorithm -->
       <v-col cols="9">
         <v-select
           label="Choose Algorithm"
@@ -11,6 +12,7 @@
         ></v-select>
       </v-col>
 
+      <!-- Start sorting button -->
       <v-col cols="2">
         <v-btn
           class="secondary darken-3 mt-3 ml-5"
@@ -22,6 +24,7 @@
         </v-btn>
       </v-col>
 
+      <!-- Re-initialize random array -->
       <v-col cols="1">
         <v-btn
           class="secondary darken-3 pa-0 mt-2"
@@ -38,12 +41,14 @@
     <v-card :elevation="6" class="pa-2">
       <v-card-title>
         <v-row>
+          <!-- Heading of selected algorithm -->
           <v-col cols="9">
             <span>{{ sortingAlgorithmChoice }} Visualization</span>
           </v-col>
 
           <v-spacer></v-spacer>
 
+          <!-- Speed control -->
           <v-col cols="3">
             <v-slider
               v-model="sortingSpeed"
@@ -56,6 +61,8 @@
           </v-col>
         </v-row>
       </v-card-title>
+
+      <!-- Vertical bars -->
       <v-card
         flat
         class="d-inline-block mr-2"
@@ -82,7 +89,6 @@ export default {
     ],
     sortingAlgorithmChoice: "Sorting",
     arrayToSort: [],
-    stopSorting: false,
     algorithmRunning: false,
     minSortingSpeed: 5,
     maxSortingSpeed: 500,
@@ -107,10 +113,10 @@ export default {
         };
       }
     },
-    
+
     async callSortingAlgorithmFunction() {
       this.algorithmRunning = true;
-      switch(this.sortingAlgorithmChoice) {
+      switch (this.sortingAlgorithmChoice) {
         case "Insertion Sort":
           await this.insertionSort();
           break;
