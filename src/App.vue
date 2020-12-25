@@ -18,18 +18,11 @@ export default {
 
   components: {
     NavBar,
-    SortingCanvas
+    SortingCanvas,
   },
 
-  props: {},
-
-  data: () => ({
-    pageTitle: "Sorting Visualizer"
-  }),
-
-  methods: {}
+  data: () => {
+    return { pageTitle: "Sorting Visualizer" };
+  },
 };
 </script>
-
-<style scoped>
-</style>
