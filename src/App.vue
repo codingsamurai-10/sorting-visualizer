@@ -3,15 +3,15 @@
     <nav>
       <NavBar :pageTitle="pageTitle" />
     </nav>
-    <v-content>
+    <v-main>
       <SortingCanvas />
-    </v-content>
+    </v-main>
   </v-app>
 </template>
 
 <script>
 import NavBar from "@/components/NavBar";
-import SortingCanvas from "@/components/sortingCanvas";
+import SortingCanvas from "@/components/SortingCanvas";
 
 export default {
   name: "App",
