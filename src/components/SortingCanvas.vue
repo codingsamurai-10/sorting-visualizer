@@ -7,8 +7,8 @@
           label="Choose Algorithm"
           append-icon="mdi-chart-bar"
           color="secondary darken-4"
-          :items="sortingAlgorithmOptions"
           v-model="sortingAlgorithmChoice"
+          :items="sortingAlgorithmOptions"
         ></v-select>
       </v-col>
 
@@ -68,10 +68,10 @@
         class="d-inline-block mr-2"
         width="20px"
         v-for="item in arrayToSort"
+        ref="arrayToSort"
         :key="item.id"
         :height="item.value * 10"
         :color="item.color"
-        ref="arrayToSort"
       ></v-card>
     </v-card>
   </v-container>
