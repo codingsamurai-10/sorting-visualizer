@@ -109,18 +109,17 @@ export default {
     },
     
     async callSortingAlgorithmFunction() {
-      let event = this.sortingAlgorithmChoice;
       this.algorithmRunning = true;
-      if (event == "Merge Sort") {
-        this.mergeSort();
-      } else if (event == "Quick Sort") {
-        this.quickSort();
-      } else if (event == "Insertion Sort") {
-        await this.insertionSort();
-      } else if (event == "Selection Sort") {
-        await this.selectionSort();
-      } else if (event == "Bubble Sort") {
-        await this.bubbleSort();
+      switch(this.sortingAlgorithmChoice) {
+        case "Insertion Sort":
+          await this.insertionSort();
+          break;
+        case "Selection Sort":
+          await this.selectionSort();
+          break;
+        case "Bubble Sort":
+          await this.bubbleSort();
+          break;
       }
       this.algorithmRunning = false;
     },
