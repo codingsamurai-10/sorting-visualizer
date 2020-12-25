@@ -130,6 +130,16 @@ export default {
       this.algorithmRunning = false;
     },
 
+    async addExplicitWaitingTime() {
+      await new Promise((r) => {
+        let timeout = setTimeout(
+          r,
+          this.minSortingSpeed + this.maxSortingSpeed - this.sortingSpeed
+        );
+        if (!this.algorithmRunning) clearTimeout(timeout);
+      });
+    },
+
     async insertionSort() {
       let n = this.arrayToSort.length;
       for (let i = 1; i < n; ++i) {
@@ -140,13 +150,7 @@ export default {
             "color",
             this.colorOfCurrentInactiveBar
           );
-          await new Promise((r) => {
-            let timeout = setTimeout(
-              r,
-              this.minSortingSpeed + this.maxSortingSpeed - this.sortingSpeed
-            );
-            if (!this.algorithmRunning) clearTimeout(timeout);
-          });
+          await this.addExplicitWaitingTime();
           if (this.arrayToSort[j].value > this.arrayToSort[j + 1].value) {
             let temp = this.arrayToSort[j];
             this.$set(this.arrayToSort, j, this.arrayToSort[j + 1]);
@@ -177,13 +181,7 @@ export default {
             "color",
             this.colorOfCurrentActiveBar
           );
-          await new Promise((r) => {
-            let timeout = setTimeout(
-              r,
-              this.minSortingSpeed + this.maxSortingSpeed - this.sortingSpeed
-            );
-            if (!this.algorithmRunning) clearTimeout(timeout);
-          });
+          await this.addExplicitWaitingTime();
           if (this.arrayToSort[j].value < this.arrayToSort[min].value) {
             min = j;
           }
@@ -211,13 +209,7 @@ export default {
             "color",
             this.colorOfCurrentActiveBar
           );
-          await new Promise((r) => {
-            let timeout = setTimeout(
-              r,
-              this.minSortingSpeed + this.maxSortingSpeed - this.sortingSpeed
-            );
-            if (!this.algorithmRunning) clearTimeout(timeout);
-          });
+          await this.addExplicitWaitingTime();
           if (this.arrayToSort[j].value > this.arrayToSort[j + 1].value) {
             flag = false;
             let temp = this.arrayToSort[j];
