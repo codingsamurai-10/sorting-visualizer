@@ -1,6 +1,5 @@
 <template>
   <v-container fluid>
-
     <v-row>
       <v-col cols="9">
         <v-select
@@ -118,7 +117,7 @@ export default {
               r,
               this.minSortingSpeed + this.maxSortingSpeed - this.sortingSpeed
             );
-            if(!this.algorithmRunning) clearTimeout(timeout);
+            if (!this.algorithmRunning) clearTimeout(timeout);
           });
           if (this.arrayToSort[j].value > this.arrayToSort[j + 1].value) {
             let temp = this.arrayToSort[j];
@@ -155,7 +154,7 @@ export default {
               r,
               this.minSortingSpeed + this.maxSortingSpeed - this.sortingSpeed
             );
-            if(!this.algorithmRunning) clearTimeout(timeout);
+            if (!this.algorithmRunning) clearTimeout(timeout);
           });
           if (this.arrayToSort[j].value < this.arrayToSort[min].value) {
             min = j;
@@ -189,7 +188,7 @@ export default {
               r,
               this.minSortingSpeed + this.maxSortingSpeed - this.sortingSpeed
             );
-            if(!this.algorithmRunning) clearTimeout(timeout);
+            if (!this.algorithmRunning) clearTimeout(timeout);
           });
           if (this.arrayToSort[j].value > this.arrayToSort[j + 1].value) {
             flag = false;
