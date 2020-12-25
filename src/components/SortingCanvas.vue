@@ -92,7 +92,39 @@ export default {
     colorOfCurrentInactiveBar: "red",
   }),
 
+  created() {
+    this.initializeRandomArray();
+  },
+
   methods: {
+    initializeRandomArray: function () {
+      this.algorithmRunning = false;
+      this.arrayToSort = new Array(52);
+      for (let i = 0; i < 52; ++i) {
+        this.arrayToSort[i] = {
+          value: Math.floor(Math.random() * 55) + 10,
+          color: this.colorOfDefaultBar,
+        };
+      }
+    },
+    
+    async callSortingAlgorithmFunction() {
+      let event = this.sortingAlgorithmChoice;
+      this.algorithmRunning = true;
+      if (event == "Merge Sort") {
+        this.mergeSort();
+      } else if (event == "Quick Sort") {
+        this.quickSort();
+      } else if (event == "Insertion Sort") {
+        await this.insertionSort();
+      } else if (event == "Selection Sort") {
+        await this.selectionSort();
+      } else if (event == "Bubble Sort") {
+        await this.bubbleSort();
+      }
+      this.algorithmRunning = false;
+    },
+
     async insertionSort() {
       let n = this.arrayToSort.length;
       for (let i = 1; i < n; ++i) {
@@ -193,38 +225,6 @@ export default {
         if (flag) break;
       }
     },
-
-    async callSortingAlgorithmFunction() {
-      let event = this.sortingAlgorithmChoice;
-      this.algorithmRunning = true;
-      if (event == "Merge Sort") {
-        this.mergeSort();
-      } else if (event == "Quick Sort") {
-        this.quickSort();
-      } else if (event == "Insertion Sort") {
-        await this.insertionSort();
-      } else if (event == "Selection Sort") {
-        await this.selectionSort();
-      } else if (event == "Bubble Sort") {
-        await this.bubbleSort();
-      }
-      this.algorithmRunning = false;
-    },
-
-    initializeRandomArray: function () {
-      this.algorithmRunning = false;
-      this.arrayToSort = new Array(52);
-      for (let i = 0; i < 52; ++i) {
-        this.arrayToSort[i] = {
-          value: Math.floor(Math.random() * 55) + 10,
-          color: this.colorOfDefaultBar,
-        };
-      }
-    },
-  },
-
-  created() {
-    this.initializeRandomArray();
   },
 };
 </script>
