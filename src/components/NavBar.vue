@@ -9,6 +9,11 @@
 <script>
 export default {
   name: "NavBar",
-  props: ["pageTitle"],
+  props: {
+    pageTitle: {
+      type: String,
+      required: true,
+    },
+  },
 };
 </script>
