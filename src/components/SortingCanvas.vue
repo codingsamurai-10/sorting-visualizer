@@ -108,7 +108,7 @@ export default {
   },
 
   methods: {
-    initializeRandomArray: function () {
+    initializeRandomArray() {
       this.algorithmRunning = false;
       this.arrayToSort = new Array(52);
       for (let i = 0; i < 52; ++i) {
@@ -136,7 +136,7 @@ export default {
     },
 
     resetBarColors() {
-      for(let i = 0; i < this.arrayToSort.length; ++i) {
+      for (let i = 0; i < this.arrayToSort.length; ++i) {
         this.$set(this.arrayToSort[i], "color", this.colorOfDefaultBar);
       }
     },
