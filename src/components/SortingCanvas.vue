@@ -52,7 +52,7 @@
                 <!-- Speed control -->
                 <v-col cols="3">
                   <v-slider
-                    v-model="defaultSortingSpeed"
+                    v-model="currentSortingSpeed"
                     :min="minSortingSpeed"
                     :max="maxSortingSpeed"
                   >
@@ -97,10 +97,10 @@ export default {
     algorithmRunning: false,
     minSortingSpeed: 5,
     maxSortingSpeed: 500,
-    defaultSortingSpeed: 450,
+    currentSortingSpeed: 450,
     colorOfDefaultBar: "#1976D2",
-    colorOfCurrentActiveBar: "#4db6ac",
-    colorOfCurrentInactiveBar: "red",
+    colorOfBarOneBeingCompared: "#4db6ac",
+    colorOfBarTwoBeingCompared: "red",
   }),
 
   created() {
@@ -139,7 +139,7 @@ export default {
       await new Promise((r) => {
         let timeout = setTimeout(
           r,
-          this.minSortingSpeed + this.maxSortingSpeed - this.defaultSortingSpeed
+          this.minSortingSpeed + this.maxSortingSpeed - this.currentSortingSpeed
         );
         if (!this.algorithmRunning) clearTimeout(timeout);
       });
@@ -149,11 +149,11 @@ export default {
       let n = this.arrayToSort.length;
       for (let i = 1; i < n; ++i) {
         for (let j = i - 1; j >= 0; --j) {
-          this.$set(this.arrayToSort[j], "color", this.colorOfCurrentActiveBar);
+          this.$set(this.arrayToSort[j], "color", this.colorOfBarOneBeingCompared);
           this.$set(
             this.arrayToSort[j + 1],
             "color",
-            this.colorOfCurrentInactiveBar
+            this.colorOfBarTwoBeingCompared
           );
           await this.addExplicitWaitingTime();
           if (this.arrayToSort[j].value > this.arrayToSort[j + 1].value) {
@@ -179,12 +179,12 @@ export default {
           this.$set(
             this.arrayToSort[j],
             "color",
-            this.colorOfCurrentInactiveBar
+            this.colorOfBarTwoBeingCompared
           );
           this.$set(
             this.arrayToSort[min],
             "color",
-            this.colorOfCurrentActiveBar
+            this.colorOfBarOneBeingCompared
           );
           await this.addExplicitWaitingTime();
           if (this.arrayToSort[j].value < this.arrayToSort[min].value) {
@@ -207,12 +207,12 @@ export default {
           this.$set(
             this.arrayToSort[j],
             "color",
-            this.colorOfCurrentInactiveBar
+            this.colorOfBarTwoBeingCompared
           );
           this.$set(
             this.arrayToSort[j + 1],
             "color",
-            this.colorOfCurrentActiveBar
+            this.colorOfBarOneBeingCompared
           );
           await this.addExplicitWaitingTime();
           if (this.arrayToSort[j].value > this.arrayToSort[j + 1].value) {
