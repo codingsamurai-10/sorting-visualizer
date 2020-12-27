@@ -135,7 +135,13 @@ export default {
       this.algorithmRunning = false;
     },
 
-    async addExplicitWaitingTime(j) {
+    resetBarColors() {
+      for(let i = 0; i < this.arrayToSort.length; ++i) {
+        this.$set(this.arrayToSort[i], "color", this.colorOfDefaultBar);
+      }
+    },
+
+    async addExplicitWaitingTime() {
       await new Promise((r) => {
         let timeout = setTimeout(
           r,
@@ -143,8 +149,7 @@ export default {
         );
         if (!this.algorithmRunning) {
           clearTimeout(timeout);
-          this.$set(this.arrayToSort[j], "color", this.colorOfDefaultBar);
-          this.$set(this.arrayToSort[j + 1], "color", this.colorOfDefaultBar);
+          this.resetBarColors();
         }
       });
     },
@@ -163,7 +168,7 @@ export default {
             "color",
             this.colorOfBarTwoBeingCompared
           );
-          await this.addExplicitWaitingTime(j);
+          await this.addExplicitWaitingTime();
           if (this.arrayToSort[j].value > this.arrayToSort[j + 1].value) {
             let temp = this.arrayToSort[j];
             this.$set(this.arrayToSort, j, this.arrayToSort[j + 1]);
