@@ -52,7 +52,7 @@
                 <!-- Speed control -->
                 <v-col cols="3">
                   <v-slider
-                    v-model="sortingSpeed"
+                    v-model="defaultSortingSpeed"
                     :min="minSortingSpeed"
                     :max="maxSortingSpeed"
                   >
@@ -97,7 +97,7 @@ export default {
     algorithmRunning: false,
     minSortingSpeed: 5,
     maxSortingSpeed: 500,
-    sortingSpeed: 450,
+    defaultSortingSpeed: 450,
     colorOfDefaultBar: "#1976D2",
     colorOfCurrentActiveBar: "#4db6ac",
     colorOfCurrentInactiveBar: "red",
@@ -139,7 +139,7 @@ export default {
       await new Promise((r) => {
         let timeout = setTimeout(
           r,
-          this.minSortingSpeed + this.maxSortingSpeed - this.sortingSpeed
+          this.minSortingSpeed + this.maxSortingSpeed - this.defaultSortingSpeed
         );
         if (!this.algorithmRunning) clearTimeout(timeout);
       });
