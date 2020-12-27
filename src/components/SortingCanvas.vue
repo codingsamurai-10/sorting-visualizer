@@ -179,8 +179,8 @@ export default {
             this.changeColourOfBar(j + 1);
             break;
           }
-            this.changeColourOfBar(j);
-            this.changeColourOfBar(j + 1);
+          this.changeColourOfBar(j);
+          this.changeColourOfBar(j + 1);
         }
       }
     },
