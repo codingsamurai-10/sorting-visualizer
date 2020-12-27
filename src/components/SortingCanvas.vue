@@ -189,16 +189,16 @@ export default {
       let n = this.arrayToSort.length;
       for (let i = 0; i < n - 1; ++i) {
         let min = i;
+        this.changeColourOfBar(i, 1);
         for (let j = i + 1; j < n; ++j) {
           this.changeColourOfBar(j, 2);
-          this.changeColourOfBar(min, 1);
           await this.addExplicitWaitingTime();
           if (this.arrayToSort[j].value < this.arrayToSort[min].value) {
             min = j;
           }
           this.changeColourOfBar(j);
-          this.changeColourOfBar(min);
         }
+        this.changeColourOfBar(i);
         let temp = this.arrayToSort[min];
         this.$set(this.arrayToSort, min, this.arrayToSort[i]);
         this.$set(this.arrayToSort, i, temp);
