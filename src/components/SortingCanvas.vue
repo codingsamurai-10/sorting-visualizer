@@ -38,42 +38,47 @@
       </v-col>
     </v-row>
 
-    <v-card class="pa-2" :elevation="6">
-      <v-card-title>
-        <v-row>
-          <!-- Heading of selected algorithm -->
-          <v-col cols="9">
-            <span>{{ sortingAlgorithmChoice }} Visualization</span>
-          </v-col>
+    <v-row>
+      <v-col cols="12">
+        <v-card class="pa-2" :elevation="6">
+          <v-row>
+            <v-col cols="12">
+              <v-card-title>
+                <!-- Heading of selected algorithm -->
+                <v-col cols="9">
+                  <span>{{ sortingAlgorithmChoice }} Visualization</span>
+                </v-col>
 
-          <v-spacer></v-spacer>
+                <!-- Speed control -->
+                <v-col cols="3">
+                  <v-slider
+                    v-model="sortingSpeed"
+                    :min="minSortingSpeed"
+                    :max="maxSortingSpeed"
+                  >
+                  </v-slider>
+                </v-col>
+              </v-card-title>
+            </v-col>
+          </v-row>
 
-          <!-- Speed control -->
-          <v-col cols="3">
-            <v-slider
-              class="align-center"
-              v-model="sortingSpeed"
-              :min="minSortingSpeed"
-              :max="maxSortingSpeed"
-            >
-              <template v-slot:append></template>
-            </v-slider>
-          </v-col>
-        </v-row>
-      </v-card-title>
-
-      <!-- Vertical bars -->
-      <v-card
-        flat
-        class="d-inline-block mr-2"
-        width="20px"
-        v-for="item in arrayToSort"
-        ref="arrayToSort"
-        :key="item.id"
-        :height="item.value * 10"
-        :color="item.color"
-      ></v-card>
-    </v-card>
+          <v-row>
+            <v-col cols="12">
+            <!-- Vertical bars -->
+            <v-card
+              flat
+              class="d-inline-block mr-2"
+              width="20px"
+              v-for="item in arrayToSort"
+              :key="item.id"
+              :height="item.value * 10"
+              :color="item.color"
+            ></v-card>
+            </v-col>
+          </v-row>
+        </v-card>
+      </v-col>
+    </v-row>
   </v-container>
 </template>
 
