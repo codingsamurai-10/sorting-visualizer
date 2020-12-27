@@ -115,7 +115,7 @@ export default {
         this.arrayToSort[i] = {
           value: Math.floor(Math.random() * 55) + 10,
           color: this.colorOfDefaultBar,
-          id: i + 1
+          id: i + 1,
         };
       }
     },
@@ -155,32 +155,32 @@ export default {
       });
     },
 
+    changeColourOfBar(index, colorCode=0) {
+      let color;
+      if(colorCode == 0) color = this.colorOfDefaultBar;
+      else if(colorCode == 1) color = this.colorOfBarOneBeingCompared;
+      else color = this.colorOfBarTwoBeingCompared;
+      this.$set(this.arrayToSort[index], "color", color);
+    },
+
     async insertionSort() {
       let n = this.arrayToSort.length;
       for (let i = 1; i < n; ++i) {
         for (let j = i - 1; j >= 0; --j) {
-          this.$set(
-            this.arrayToSort[j],
-            "color",
-            this.colorOfBarOneBeingCompared
-          );
-          this.$set(
-            this.arrayToSort[j + 1],
-            "color",
-            this.colorOfBarTwoBeingCompared
-          );
+          this.changeColourOfBar(j, 1);
+          this.changeColourOfBar(j + 1, 2);
           await this.addExplicitWaitingTime();
           if (this.arrayToSort[j].value > this.arrayToSort[j + 1].value) {
             let temp = this.arrayToSort[j];
             this.$set(this.arrayToSort, j, this.arrayToSort[j + 1]);
             this.$set(this.arrayToSort, j + 1, temp);
           } else {
-            this.$set(this.arrayToSort[j], "color", this.colorOfDefaultBar);
-            this.$set(this.arrayToSort[j + 1], "color", this.colorOfDefaultBar);
+            this.changeColourOfBar(j);
+            this.changeColourOfBar(j + 1);
             break;
           }
-          this.$set(this.arrayToSort[j], "color", this.colorOfDefaultBar);
-          this.$set(this.arrayToSort[j + 1], "color", this.colorOfDefaultBar);
+            this.changeColourOfBar(j);
+            this.changeColourOfBar(j + 1);
         }
       }
     },
@@ -218,16 +218,8 @@ export default {
       for (let i = 1; i < n; ++i) {
         var flag = true;
         for (let j = 0; j < n - i; ++j) {
-          this.$set(
-            this.arrayToSort[j],
-            "color",
-            this.colorOfBarTwoBeingCompared
-          );
-          this.$set(
-            this.arrayToSort[j + 1],
-            "color",
-            this.colorOfBarOneBeingCompared
-          );
+          this.changeColourOfBar(j, 2);
+          this.changeColourOfBar(j + 1, 1);
           await this.addExplicitWaitingTime();
           if (this.arrayToSort[j].value > this.arrayToSort[j + 1].value) {
             flag = false;
@@ -235,8 +227,8 @@ export default {
             this.$set(this.arrayToSort, j, this.arrayToSort[j + 1]);
             this.$set(this.arrayToSort, j + 1, temp);
           }
-          this.$set(this.arrayToSort[j], "color", this.colorOfDefaultBar);
-          this.$set(this.arrayToSort[j + 1], "color", this.colorOfDefaultBar);
+          this.changeColourOfBar(j);
+          this.changeColourOfBar(j + 1);
         }
         if (flag) break;
       }
