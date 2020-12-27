@@ -115,6 +115,7 @@ export default {
         this.arrayToSort[i] = {
           value: Math.floor(Math.random() * 55) + 10,
           color: this.colorOfDefaultBar,
+          id: i + 1
         };
       }
     },
