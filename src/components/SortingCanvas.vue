@@ -64,16 +64,16 @@
 
           <v-row>
             <v-col cols="12">
-            <!-- Vertical bars -->
-            <v-card
-              flat
-              class="d-inline-block mr-2"
-              width="20px"
-              v-for="item in arrayToSort"
-              :key="item.id"
-              :height="item.value * 10"
-              :color="item.color"
-            ></v-card>
+              <!-- Vertical bars -->
+              <v-card
+                flat
+                class="d-inline-block mr-2"
+                width="20px"
+                v-for="item in arrayToSort"
+                :key="item.id"
+                :height="item.value * 10"
+                :color="item.color"
+              ></v-card>
             </v-col>
           </v-row>
         </v-card>
@@ -135,13 +135,17 @@ export default {
       this.algorithmRunning = false;
     },
 
-    async addExplicitWaitingTime() {
+    async addExplicitWaitingTime(j) {
       await new Promise((r) => {
         let timeout = setTimeout(
           r,
           this.minSortingSpeed + this.maxSortingSpeed - this.currentSortingSpeed
         );
-        if (!this.algorithmRunning) clearTimeout(timeout);
+        if (!this.algorithmRunning) {
+          clearTimeout(timeout);
+          this.$set(this.arrayToSort[j], "color", this.colorOfDefaultBar);
+          this.$set(this.arrayToSort[j + 1], "color", this.colorOfDefaultBar);
+        }
       });
     },
 
@@ -149,13 +153,17 @@ export default {
       let n = this.arrayToSort.length;
       for (let i = 1; i < n; ++i) {
         for (let j = i - 1; j >= 0; --j) {
-          this.$set(this.arrayToSort[j], "color", this.colorOfBarOneBeingCompared);
+          this.$set(
+            this.arrayToSort[j],
+            "color",
+            this.colorOfBarOneBeingCompared
+          );
           this.$set(
             this.arrayToSort[j + 1],
             "color",
             this.colorOfBarTwoBeingCompared
           );
-          await this.addExplicitWaitingTime();
+          await this.addExplicitWaitingTime(j);
           if (this.arrayToSort[j].value > this.arrayToSort[j + 1].value) {
             let temp = this.arrayToSort[j];
             this.$set(this.arrayToSort, j, this.arrayToSort[j + 1]);
