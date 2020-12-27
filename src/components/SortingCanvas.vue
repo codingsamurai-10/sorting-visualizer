@@ -100,7 +100,7 @@ export default {
     currentSortingSpeed: 450,
     colorOfDefaultBar: "#1976D2",
     colorOfBarOneBeingCompared: "#4db6ac",
-    colorOfBarTwoBeingCompared: "red",
+    colorOfBarTwoBeingCompared: "pink",
   }),
 
   created() {
