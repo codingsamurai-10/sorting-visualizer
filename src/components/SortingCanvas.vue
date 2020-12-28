@@ -84,6 +84,8 @@
 
 <script>
 import { insertionSort } from '../sorting_algorithms/insertionSort';
+import { selectionSort } from '../sorting_algorithms/selectionSort';
+import { bubbleSort } from '../sorting_algorithms/bubbleSort';
 
 export default {
   name: "SortingCanvas",
@@ -129,10 +131,10 @@ export default {
           await insertionSort(this, this.arrayToSort, this.changeColourOfBar, this.addExplicitWaitingTime);
           break;
         case "Selection Sort":
-          await this.selectionSort();
+          await selectionSort(this, this.arrayToSort, this.changeColourOfBar, this.addExplicitWaitingTime);
           break;
         case "Bubble Sort":
-          await this.bubbleSort();
+          await bubbleSort(this, this.arrayToSort, this.changeColourOfBar, this.addExplicitWaitingTime);
           break;
       }
       this.algorithmRunning = false;
@@ -163,47 +165,6 @@ export default {
       else if (colorCode == 1) color = this.colorOfBarOneBeingCompared;
       else color = this.colorOfBarTwoBeingCompared;
       this.$set(this.arrayToSort[index], "color", color);
-    },
-
-    async selectionSort() {
-      let n = this.arrayToSort.length;
-      for (let i = 0; i < n - 1; ++i) {
-        let min = i;
-        this.changeColourOfBar(i, 1);
-        for (let j = i + 1; j < n; ++j) {
-          this.changeColourOfBar(j, 2);
-          await this.addExplicitWaitingTime();
-          if (this.arrayToSort[j].value < this.arrayToSort[min].value) {
-            min = j;
-          }
-          this.changeColourOfBar(j);
-        }
-        this.changeColourOfBar(i);
-        let temp = this.arrayToSort[min];
-        this.$set(this.arrayToSort, min, this.arrayToSort[i]);
-        this.$set(this.arrayToSort, i, temp);
-      }
-    },
-
-    async bubbleSort() {
-      let n = this.arrayToSort.length;
-      for (let i = 1; i < n; ++i) {
-        var flag = true;
-        for (let j = 0; j < n - i; ++j) {
-          this.changeColourOfBar(j, 2);
-          this.changeColourOfBar(j + 1, 1);
-          await this.addExplicitWaitingTime();
-          if (this.arrayToSort[j].value > this.arrayToSort[j + 1].value) {
-            flag = false;
-            let temp = this.arrayToSort[j];
-            this.$set(this.arrayToSort, j, this.arrayToSort[j + 1]);
-            this.$set(this.arrayToSort, j + 1, temp);
-          }
-          this.changeColourOfBar(j);
-          this.changeColourOfBar(j + 1);
-        }
-        if (flag) break;
-      }
     },
   },
 };
