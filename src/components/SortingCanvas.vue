@@ -134,7 +134,7 @@ export default {
           await selectionSort(this);
           break;
         case "Bubble Sort":
-          await bubbleSort(this, this.arrayToSort, this.changeColourOfBar, this.addExplicitWaitingTime);
+          await bubbleSort(this);
           break;
       }
       this.algorithmRunning = false;
