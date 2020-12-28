@@ -131,7 +131,7 @@ export default {
           await insertionSort(this);
           break;
         case "Selection Sort":
-          await selectionSort(this, this.arrayToSort, this.changeColourOfBar, this.addExplicitWaitingTime);
+          await selectionSort(this);
           break;
         case "Bubble Sort":
           await bubbleSort(this, this.arrayToSort, this.changeColourOfBar, this.addExplicitWaitingTime);
