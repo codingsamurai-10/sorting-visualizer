@@ -128,7 +128,7 @@ export default {
       this.algorithmRunning = true;
       switch (this.sortingAlgorithmChoice) {
         case "Insertion Sort":
-          await insertionSort(this, this.arrayToSort, this.changeColourOfBar, this.addExplicitWaitingTime);
+          await insertionSort(this);
           break;
         case "Selection Sort":
           await selectionSort(this, this.arrayToSort, this.changeColourOfBar, this.addExplicitWaitingTime);
