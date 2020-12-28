@@ -83,6 +83,8 @@
 </template>
 
 <script>
+import { insertionSort } from '../sorting_algorithms/insertionSort';
+
 export default {
   name: "SortingCanvas",
 
@@ -124,7 +126,7 @@ export default {
       this.algorithmRunning = true;
       switch (this.sortingAlgorithmChoice) {
         case "Insertion Sort":
-          await this.insertionSort();
+          await insertionSort(this, this.arrayToSort, this.changeColourOfBar, this.addExplicitWaitingTime);
           break;
         case "Selection Sort":
           await this.selectionSort();
@@ -161,28 +163,6 @@ export default {
       else if (colorCode == 1) color = this.colorOfBarOneBeingCompared;
       else color = this.colorOfBarTwoBeingCompared;
       this.$set(this.arrayToSort[index], "color", color);
-    },
-
-    async insertionSort() {
-      let n = this.arrayToSort.length;
-      for (let i = 1; i < n; ++i) {
-        for (let j = i - 1; j >= 0; --j) {
-          this.changeColourOfBar(j, 1);
-          this.changeColourOfBar(j + 1, 2);
-          await this.addExplicitWaitingTime();
-          if (this.arrayToSort[j].value > this.arrayToSort[j + 1].value) {
-            let temp = this.arrayToSort[j];
-            this.$set(this.arrayToSort, j, this.arrayToSort[j + 1]);
-            this.$set(this.arrayToSort, j + 1, temp);
-          } else {
-            this.changeColourOfBar(j);
-            this.changeColourOfBar(j + 1);
-            break;
-          }
-          this.changeColourOfBar(j);
-          this.changeColourOfBar(j + 1);
-        }
-      }
     },
 
     async selectionSort() {
